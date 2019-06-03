@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="container mt-2">
+		<div class="row">
+			{% if user[4] == 'Admin' %}
+				<div class="col-sm">
+					<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('create_users_page') }}" > Create New User </a>
+				</div>
+			{% endif %}
+			<div class="col-sm">
+				<div class="input-group input-group-lg">
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="search_box">
+					<div class="dropdown">
+						<button class="btn btn-dark dropdown-toggle btn-lg btn-block" type="button" id="search" data-toggle="dropdown" onclick="">
+							Search <i class="fa fa-search"></i>
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<button class="dropdown-item" onclick="searchURL('Login.FirstName');">First Name</button>
+							<button class="dropdown-item" onclick="searchURL('Login.Surname');">Second Name</button>
+							<button class="dropdown-item" onclick="searchURL('Login.Username');">Username</button>
+							<button class="dropdown-item" onclick="searchURL('Login.Roles');">Permissions</button>
+							<button class="dropdown-item" onclick="searchURL('BadgeLink.BadgeColour');">Badge Colour</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table class="table mt-2 shadow-lg">
+		<thead>
+			<tr class="bg-dark text-light">
+				<th scope="col">#</th>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+				<th scope="col">User Name</th>
+				<th scope="col">Badge Colour</th>
+				<th scope="col" style="width: 8%">Permissions</th>
+				<th scope="col"></th>
+				<th scope="col"></th>
+				{% if user[4] == 'Admin' %}
+					<th scope="col"></th>
+					<th scope="col"></th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in data %}
+			<tr class="bg-light">
+				<td>{{i[0]}}</td>
+				<td>{{i[2]}}</td>
+				<td>{{i[3]}}</td>
+				<td>{{i[1]}}</td>
+				<td>
+					{% if i[5] == None %}
+						No Given Permit
+					{% else %}
+						{{i[5]}}
+					{% endif %}
+				</th>
+				<td>{{i[4]}}</td>
+				<td style="width: 12%" class="text-center">
+					<a class="nav-link border border-primary rounded bg-primary text-light" href="{{ url_for('user_info') }}?user_id={{i[0]}}" > More Info </a>
+				</td>
+				<td style="width: 12%" class="text-center">
+					<a class="nav-link border border-primary rounded bg-primary text-light" href="{{ url_for('manage_user_reservations') }}?user_id={{i[0]}}" >Reservations</a>
+				</td>
+				{% if user[4] == 'Admin' %}
+					<td style="width: 12%" class="text-center">
+						<a class="nav-link border border-primary rounded bg-primary text-light" href="{{ url_for('edit_users_page') }}?user_id={{i[0]}}" > Edit User </a>
+					</td>
+					<td style="width: 12%" class="text-center">
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{i[3]}}">
+							Delete User
+						</button>
+						<div class="modal" id="{{i[3]}}">
+							<div class="modal-dialog">
+							  <div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Are You Sure You Want To delete User: {{i[0]}}, {{i[3]}} {{i[4]}}</h4>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+										<a class="nav-link rounded bg-primary text-light" href="{{ url_for('manage_users_page') }}?operation=delete&user_id={{i[0]}}"> Delete User </a>
+									</div>
+										
+								</div>
+							</div>
+						</div>
+					</td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script>
+		function searchURL(operation){
+			window.location.href = '/manage_users_page?operation=search&key='+operation+'&search='+document.getElementById('search_box').value;
+		}
+	</script>
+{% endblock content%}

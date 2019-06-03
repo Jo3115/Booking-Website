@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="card mx-auto p-2  shadow-lg">
+		<div class="card-head">
+			{% if user[5] == 'False' %}
+				<div class="alert alert-danger" role="alert">
+					You Must Use Park and Ride Today
+				</div>
+			{% endif %}
+			<h1>Hello {{user[1]}} {{user[2]}}<h1>
+			{% if not badge_true %}
+				<div class="alert alert-danger" role="alert">
+					You Do Not Currently Have a Parking Permit Please Contact An Admin.
+				</div>
+			{% endif %}
+		</div>
+		<div class="card-body">
+			{% if user[5] == 'True' %}
+				<div class="alert alert-success" role="alert">
+					You Can Park This Week. Weeks You Must Park at Park and Ride:
+					<table class="table shadow-lg">
+						<thead>
+							<tr class="">
+								<th scope="col">{{badge[0]}}</th>
+								<th scope="col">{{badge[1]}}</th>
+								<th scope="col">{{badge[2]}}</th>
+								<th scope="col">{{badge[3]}}</th>
+								<th scope="col">{{badge[4]}}</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			{% endif %}
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('user_info') }}" > 
+							<h4>User Information</h4>
+						</a>
+					</div>
+					{% if badge_true %}
+						<div class="col">
+							<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('view_car') }}" > 
+								<h4>View Cars</h4> 
+							</a>
+						</div>
+						<div class="col">
+							<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('book_parking') }}" > 
+								<h4>Book Parking</h4>
+							</a>
+						</div>
+					{% endif %}
+					<div class="col">
+						<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('logout') }}" > 
+							<h4>Logout</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+			{% if parking %}
+				<table class="table mt-2 shadow-lg">
+					<thead>
+						<tr class="bg-dark text-light">
+							<th scope="col">Car Reg</th>
+							<th scope="col">Bay Number</th>
+							<th scope="col">Bay Type</th>
+							<th scope="col">Start Time</th>
+							<th scope="col">End Time</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in parking %}
+						<tr class="bg-light">
+							<td>{{i[1]}}</td>
+							<td>{{i[4]}}</td>
+							<td>{{i[5]}}</td>
+							<td>{{i[2]}}</td>
+							<td>{{i[3]}}</td>
+							<td>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{i[1]}}{{i[0]}}">
+									Delete Booking
+								</button>
+								<div class="modal" id="{{i[1]}}{{i[0]}}">
+									<div class="modal-dialog">
+									  <div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Are You Sure You Want To Delete Booking</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+												<a class="nav-link rounded bg-primary text-light" href="{{ url_for('home_page') }}?operation=delete&booking_id={{i[0]}}"> Delete Booking </a>
+											</div>
+												
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+			<table class="table mt-2 shadow-lg">
+				<tbody>
+					<tr class="bg-light">
+						<th class="bg-dark text-light">Southampton Airport</th>
+						<td>7:00</td>
+						<td>7:20</td>
+						<td>7:40</td>
+						<td>8:00</th>
+						<td>8:20</th>
+						<td>8:40</td>
+						<td>9:00</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr class="bg-light">
+						<th class="bg-dark text-light">B&Q House</td>
+						<td>4:00</td>
+						<td>4:20</td>
+						<td>4:40</td>
+						<td>5:00</th>
+						<td>5:20</th>
+						<td>5:40</td>
+						<td>6:00</td>
+						<td>6:15</td>
+						<td>6:30</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock content%}

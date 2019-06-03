@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+	<div class="card mx-auto w-90 p-2 m-5 shadow-lg">
+		<div class="card-body">
+			{% if error %}
+				<div class="alert alert-danger" role="alert">
+			{{ error }}
+				</div>
+			{% endif %}
+			<h2>Create Booking</h2>
+			<form action="" method="POST">
+				<div class="form-group">
+					<label for="exampleFormControlSelect1"><h3>Choose Car</h3></label>
+					<select class="form-control" id="exampleFormControlSelect1" name="car">
+						{% for i in cars %}
+							<option>
+								Car Reg: {{i[0]}}, Car Make: {{i[2]}},
+									{% if i[3] == 'Yes' %}
+										Bay Type: Electric
+									{% else %}
+										Bay Type: Normal
+									{% endif %}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="form-group row">
+					<label for="example-datetime-local-input" class="col-2 col-form-label">Start Date and Time:</label>
+					<div class="col-10">
+						<input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" name="start_time">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-datetime-local-input" class="col-2 col-form-label">Finish Date and Time:</label>
+					<div class="col-10">
+						<input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" name="finish_time">
+					</div>
+				</div>
+				<button type="submit" value="submit" class="btn btn-dark btn-lg btn-block mt-2">Submit</button>
+			<form>
+			<h1></h1>
+			<a class="btn btn-danger btn-lg btn-block mt-2" href="{{ url_for('home_page') }}" > 
+				<h5>Back</h5>
+			</a>
+		</div>
+	</div>
+{% endblock content%}

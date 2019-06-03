@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+	<div class="card mx-auto w-75 p-2 m-5 shadow-lg">
+		<div class="card-body">
+			{% if error %}
+				<div class="alert alert-danger" role="alert">
+			{{ error }}
+				</div>
+			{% endif %}
+			<form action="" method="POST">
+				<div class="input-group input-group-lg mt-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">First Name</span>
+					</div>
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="first_name">
+				</div>
+				<div class="input-group input-group-lg mt-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">Surname</span>
+					</div>
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="seccond_name">
+				</div>
+				<div class="input-group input-group-lg mt-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">Username</span>
+					</div>
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="username">
+				</div>
+				<div class="input-group input-group-lg mt-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">Password</span>
+					</div>
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="password">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlSelect1"><h4>Permissions</h4></label>
+					<select class="form-control" id="exampleFormControlSelect1" name="permissions">
+						<option>Admin</option>
+						<option>Manager</option>
+						<option>User</option>
+						<option>Facilities</option>
+					</select>
+				</div>
+				<button type="submit" value="submit" class="btn btn-dark btn-lg btn-block mt-2">Submit</button>
+			<form>
+			<a class="btn btn-danger btn-lg btn-block mt-2" href="{{ url_for('manage_users_page') }}" > 
+				<h5>Back</h5>
+			</a>
+		</div>
+	</div>
+{% endblock content%}

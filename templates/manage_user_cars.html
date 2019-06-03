@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="card mx-auto p-2  shadow-lg">
+		<div class="card-body">
+			
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<h2>Viewing Cars For: {{user[1]}} {{user[2]}}</h2>
+						</div>
+						<div class="col-3">
+							<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('register_car') }}" > 
+								<h4>Add New Vehicle</h4>
+							</a>
+						</div>
+						<div class="col-2">
+							<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('home_page') }}" > 
+								<h4>Back</h4>
+							</a>
+						</div>
+					</div>
+				</div>
+				<table class="table mt-2 shadow-lg">
+					<thead>
+						<tr class="bg-dark text-light">
+							<th scope="col">Vehicle Reg</th>
+							<th scope="col">Vehicle Make</th>
+							<th scope="col">Vehicle Type</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in car %}
+						<tr class="bg-light">
+							<td>{{i[0]}}</td>
+							<td>{{i[2]}}</td>
+							<td>
+								{% if i[3] == 'Yes' %}
+									Electric
+								{% else %}
+									Normal
+								{% endif %}
+							</td>
+							<td>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{i[0]}}">
+									Delete Vehicle
+								</button>
+								<div class="modal" id="{{i[0]}}">
+									<div class="modal-dialog">
+									  <div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Are You Sure You Want To delete Vehicle</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+												<a class="nav-link rounded bg-primary text-light" href="{{ url_for('view_car') }}?operation=delete&car_id={{i[0]}}"> Delete Vehicle </a>
+											</div>
+												
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+		</div>
+	</div>
+{% endblock content%}

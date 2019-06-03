@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+	<div class="card mx-auto w-75 p-2 m-5 shadow-lg">
+		<div class="card-head">
+			{% if error %}
+				<div class="alert alert-danger" role="alert">
+			{{ error }}
+				</div>
+			{% endif %}
+			<h3>Edditing User: {{ edit_user[3] }} {{ edit_user[4] }}</h3>
+			<h3>Employee Number: {{ edit_user[0] }}</h3>
+		</div>
+		<div class="card-body">
+			<form action="" method="POST">
+				<div class="form-group">
+					<div>
+						<label for="exampleFormControlSelect1"><h4>Mobile No</h4></label>
+						<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="Mobile_No">
+					</div>
+					<div>
+						<label for="exampleFormControlSelect1"><h4>Postcode</h4></label>
+						<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="Postcode">
+					</div>
+					<label for="exampleFormControlSelect1"><h4>Department</h4></label>
+					<select class="form-control" id="exampleFormControlSelect1" name="Department">
+						<option>Admin</option>
+						<option>Accounting</option>
+						<option>Marketing</option>
+						<option>Sales</option>
+						<option>Development</option>
+					</select>
+					<label for="exampleFormControlSelect1"><h4>Type Of Employment</h4></label>
+					<select class="form-control" id="exampleFormControlSelect1" name="type_of_employment">
+						<option>Permanent Employee</option>
+						<option>Contractor</option>
+						<option>Graduates</option>
+						<option>Placement Students</option>
+					</select>
+					<label for="exampleFormControlSelect1"><h4>Blue Badge</h4></label>
+					<select class="form-control" id="exampleFormControlSelect1" name="blue_badge">
+						<option>Yes</option>
+						<option>No</option>
+					</select>
+				</div>
+				<button type="submit" value="submit" class="btn btn-dark btn-lg btn-block mt-2">Submit</button>
+			<form>
+			<a class="btn btn-danger btn-lg btn-block mt-2" href="{{ url_for('manage_users_page') }}" > 
+				<h5>Back</h5>
+			</a>
+		</div>
+	</div>
+{% endblock content%}

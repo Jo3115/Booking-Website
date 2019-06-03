@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+	<div class="card mx-auto w-75 p-2 m-5 shadow-lg">
+		<div class="card-body">
+			{% if error %}
+				<div class="alert alert-danger" role="alert">
+			{{ error }}
+				</div>
+			{% endif %}
+			<h2>Register New Car</h2>
+			<form action="" method="POST">
+				<div class="input-group input-group-lg mt-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">Vehicle Reg</span>
+					</div>
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="VehicleReg">
+				</div>
+				<div class="input-group input-group-lg mt-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">Vehicle Make</span>
+					</div>
+					<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="VehicleMake">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlSelect1"><h4>Electric Car?</h4></label>
+					<select class="form-control" id="exampleFormControlSelect1" name="Electric">
+						<option>Yes</option>
+						<option>No</option>
+					</select>
+				</div>
+				<button type="submit" value="submit" class="btn btn-dark btn-lg btn-block mt-2">Submit</button>
+			<form>
+			<a class="btn btn-danger btn-lg btn-block mt-2" href="{{ url_for('view_car') }}" > 
+				<h5>Back</h5>
+			</a>
+		</div>
+	</div>
+{% endblock content%}

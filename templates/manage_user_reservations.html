@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="card mx-auto p-2  shadow-lg">
+		<div class="card-body">
+			{% if parking %}
+				<div class="container">
+					<div class="row">
+						{% if not previous %}
+							<div class="col">
+								<h2>Viewing Parking For: {{user_checked[0][3]}} {{user_checked[0][4]}}</h2>
+							</div>
+							<div class="col-4">
+								<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('manage_user_reservations_previous') }}?user_id={{user_checked[0][0]}}" > 
+									<h4>Previous Reservations</h4>
+								</a>
+							</div>
+						{% else %}
+						<div class="col">
+							<h2>Viewing Previous Parking For: {{user_checked[0][3]}} {{user_checked[0][4]}}</h2>
+						</div>
+						{% endif %}
+						<div class="col-">
+							<a class="nav-link border border-dark rounded bg-dark text-light shadow-lg" href="{{ url_for('manage_users_page') }}" > 
+								<h4>Back</h4>
+							</a>
+						</div>
+					</div>
+				</div>
+				<table class="table mt-2 shadow-lg">
+					<thead>
+						<tr class="bg-dark text-light">
+							<th scope="col">Car Reg</th>
+							<th scope="col">Bay Number</th>
+							<th scope="col">Bay Type</th>
+							<th scope="col">Start Time</th>
+							<th scope="col">End Time</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in parking %}
+						<tr class="bg-light">
+							<td>{{i[1]}}</td>
+							<td>{{i[4]}}</td>
+							<td>{{i[5]}}</td>
+							<td>{{i[2]}}</td>
+							<td>{{i[3]}}</td>
+							{% if not previous %}
+								<td>
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{i[1]}}{{i[0]}}">
+										Delete Booking
+									</button>
+									<div class="modal" id="{{i[1]}}{{i[0]}}">
+										<div class="modal-dialog">
+										  <div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title">Are You Sure You Want To delete Booking</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+													<a class="nav-link rounded bg-primary text-light" href="{{ url_for('home_page') }}?operation=delete&booking_id={{i[0]}}"> Delete Booking </a>
+												</div>
+													
+											</div>
+										</div>
+									</div>
+								</td>
+							{% endif %}
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				{% if not previous %}
+					<h1>User Has No Current Reservations</h1>
+				{% else %}
+					<h1>User Has No Previous Reservations</h1>
+				{% endif %}
+				<a class="nav-link rounded bg-dark text-light" href="{{ url_for('manage_users_page') }}"> Return </a>
+			{% endif %}
+		</div>
+	</div>
+{% endblock content%}
